@@ -5,24 +5,14 @@ user/_zombie:     file format elf64-littleriscv
 Disassembly of section .text:
 
 0000000000000000 <main>:
-#include "kernel/stat.h"
-#include "user/user.h"
-
-int
-main(void)
-{
    0:	1141                	addi	sp,sp,-16
    2:	e406                	sd	ra,8(sp)
    4:	e022                	sd	s0,0(sp)
    6:	0800                	addi	s0,sp,16
-  if(fork() > 0)
    8:	278000ef          	jal	280 <fork>
    c:	00a04563          	bgtz	a0,16 <main+0x16>
-    sleep(5);  // Let child exit before parent.
-  exit(0);
   10:	4501                	li	a0,0
   12:	276000ef          	jal	288 <exit>
-    sleep(5);  // Let child exit before parent.
   16:	4515                	li	a0,5
   18:	300000ef          	jal	318 <sleep>
   1c:	bfd5                	j	10 <main+0x10>

@@ -5,12 +5,6 @@ user/_wc:     file format elf64-littleriscv
 Disassembly of section .text:
 
 0000000000000000 <wc>:
-
-char buf[512];
-
-void
-wc(int fd, char *name)
-{
    0:	7119                	addi	sp,sp,-128
    2:	fc86                	sd	ra,120(sp)
    4:	f8a2                	sd	s0,112(sp)
@@ -28,75 +22,43 @@ wc(int fd, char *name)
   1c:	0100                	addi	s0,sp,128
   1e:	f8a43423          	sd	a0,-120(s0)
   22:	f8b43023          	sd	a1,-128(s0)
-  int i, n;
-  int l, w, c, inword;
-
-  l = w = c = 0;
-  inword = 0;
   26:	4901                	li	s2,0
-  l = w = c = 0;
   28:	4d01                	li	s10,0
   2a:	4c81                	li	s9,0
   2c:	4c01                	li	s8,0
-  while((n = read(fd, buf, sizeof(buf))) > 0){
   2e:	00001d97          	auipc	s11,0x1
   32:	fe2d8d93          	addi	s11,s11,-30 # 1010 <buf>
-    for(i=0; i<n; i++){
-      c++;
-      if(buf[i] == '\n')
   36:	4aa9                	li	s5,10
-        l++;
-      if(strchr(" \r\t\n\v", buf[i]))
   38:	00001a17          	auipc	s4,0x1
   3c:	958a0a13          	addi	s4,s4,-1704 # 990 <malloc+0xfe>
-        inword = 0;
   40:	4b81                	li	s7,0
-  while((n = read(fd, buf, sizeof(buf))) > 0){
   42:	a035                	j	6e <wc+0x6e>
-      if(strchr(" \r\t\n\v", buf[i]))
   44:	8552                	mv	a0,s4
   46:	1bc000ef          	jal	202 <strchr>
   4a:	c919                	beqz	a0,60 <wc+0x60>
-        inword = 0;
   4c:	895e                	mv	s2,s7
-    for(i=0; i<n; i++){
   4e:	0485                	addi	s1,s1,1
   50:	01348d63          	beq	s1,s3,6a <wc+0x6a>
-      if(buf[i] == '\n')
   54:	0004c583          	lbu	a1,0(s1)
   58:	ff5596e3          	bne	a1,s5,44 <wc+0x44>
-        l++;
   5c:	2c05                	addiw	s8,s8,1
   5e:	b7dd                	j	44 <wc+0x44>
-      else if(!inword){
   60:	fe0917e3          	bnez	s2,4e <wc+0x4e>
-        w++;
   64:	2c85                	addiw	s9,s9,1
-        inword = 1;
   66:	4905                	li	s2,1
   68:	b7dd                	j	4e <wc+0x4e>
   6a:	01ab0d3b          	addw	s10,s6,s10
-  while((n = read(fd, buf, sizeof(buf))) > 0){
   6e:	20000613          	li	a2,512
   72:	85ee                	mv	a1,s11
   74:	f8843503          	ld	a0,-120(s0)
   78:	366000ef          	jal	3de <read>
   7c:	8b2a                	mv	s6,a0
   7e:	00a05963          	blez	a0,90 <wc+0x90>
-    for(i=0; i<n; i++){
   82:	00001497          	auipc	s1,0x1
   86:	f8e48493          	addi	s1,s1,-114 # 1010 <buf>
   8a:	009509b3          	add	s3,a0,s1
   8e:	b7d9                	j	54 <wc+0x54>
-      }
-    }
-  }
-  if(n < 0){
   90:	02054c63          	bltz	a0,c8 <wc+0xc8>
-    printf("wc: read error\n");
-    exit(1);
-  }
-  printf("%d %d %d %s\n", l, w, c, name);
   94:	f8043703          	ld	a4,-128(s0)
   98:	86ea                	mv	a3,s10
   9a:	8666                	mv	a2,s9
@@ -104,7 +66,6 @@ wc(int fd, char *name)
   9e:	00001517          	auipc	a0,0x1
   a2:	91250513          	addi	a0,a0,-1774 # 9b0 <malloc+0x11e>
   a6:	738000ef          	jal	7de <printf>
-}
   aa:	70e6                	ld	ra,120(sp)
   ac:	7446                	ld	s0,112(sp)
   ae:	74a6                	ld	s1,104(sp)
@@ -120,26 +81,17 @@ wc(int fd, char *name)
   c2:	6de2                	ld	s11,24(sp)
   c4:	6109                	addi	sp,sp,128
   c6:	8082                	ret
-    printf("wc: read error\n");
   c8:	00001517          	auipc	a0,0x1
   cc:	8d850513          	addi	a0,a0,-1832 # 9a0 <malloc+0x10e>
   d0:	70e000ef          	jal	7de <printf>
-    exit(1);
   d4:	4505                	li	a0,1
   d6:	2f0000ef          	jal	3c6 <exit>
 
 00000000000000da <main>:
-
-int
-main(int argc, char *argv[])
-{
   da:	7179                	addi	sp,sp,-48
   dc:	f406                	sd	ra,40(sp)
   de:	f022                	sd	s0,32(sp)
   e0:	1800                	addi	s0,sp,48
-  int fd, i;
-
-  if(argc <= 1){
   e2:	4785                	li	a5,1
   e4:	04a7d463          	bge	a5,a0,12c <main+0x52>
   e8:	ec26                	sd	s1,24(sp)
@@ -151,50 +103,32 @@ main(int argc, char *argv[])
   fa:	01d7d993          	srli	s3,a5,0x1d
   fe:	05c1                	addi	a1,a1,16
  100:	99ae                	add	s3,s3,a1
-    wc(0, "");
-    exit(0);
-  }
-
-  for(i = 1; i < argc; i++){
-    if((fd = open(argv[i], O_RDONLY)) < 0){
  102:	4581                	li	a1,0
  104:	00093503          	ld	a0,0(s2)
  108:	2fe000ef          	jal	406 <open>
  10c:	84aa                	mv	s1,a0
  10e:	02054c63          	bltz	a0,146 <main+0x6c>
-      printf("wc: cannot open %s\n", argv[i]);
-      exit(1);
-    }
-    wc(fd, argv[i]);
  112:	00093583          	ld	a1,0(s2)
  116:	eebff0ef          	jal	0 <wc>
-    close(fd);
  11a:	8526                	mv	a0,s1
  11c:	2d2000ef          	jal	3ee <close>
-  for(i = 1; i < argc; i++){
  120:	0921                	addi	s2,s2,8
  122:	ff3910e3          	bne	s2,s3,102 <main+0x28>
-  }
-  exit(0);
  126:	4501                	li	a0,0
  128:	29e000ef          	jal	3c6 <exit>
  12c:	ec26                	sd	s1,24(sp)
  12e:	e84a                	sd	s2,16(sp)
  130:	e44e                	sd	s3,8(sp)
-    wc(0, "");
  132:	00001597          	auipc	a1,0x1
  136:	86658593          	addi	a1,a1,-1946 # 998 <malloc+0x106>
  13a:	4501                	li	a0,0
  13c:	ec5ff0ef          	jal	0 <wc>
-    exit(0);
  140:	4501                	li	a0,0
  142:	284000ef          	jal	3c6 <exit>
-      printf("wc: cannot open %s\n", argv[i]);
  146:	00093583          	ld	a1,0(s2)
  14a:	00001517          	auipc	a0,0x1
  14e:	87650513          	addi	a0,a0,-1930 # 9c0 <malloc+0x12e>
  152:	68c000ef          	jal	7de <printf>
-      exit(1);
  156:	4505                	li	a0,1
  158:	26e000ef          	jal	3c6 <exit>
 

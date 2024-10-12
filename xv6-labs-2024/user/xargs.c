@@ -65,10 +65,6 @@ int main(int argc, char* argv[]) {
   int count = 0;  // Đếm số đối số hiện tại
   int i = 0;
   // Đọc input từ stdin
-  // if(flag==0)
-  // {
-
-  // }
   while (getcmd(buf[i], sizeof(buf[i])) >= 0) {
     char* s = buf[i];
     char* es = s + strlen(s);

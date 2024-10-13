@@ -19,41 +19,42 @@ char whitespace[] = " \t\r\n\v";
 
 // Hàm để tách các đối số từ chuỗi
 int gettoken(char** ps, char* es, char** q, char** eq) {
-  char* s;
-  int ret;
-  s = *ps;
+  char* s; //
+  int ret; 
+  s = *ps; //*ps dùng để giữ vị trí đang xét của chuỗi đầu vào, gán cho s để xử lý tiếp 
 
-  while (s < es && strchr(whitespace, *s))
+  while (s < es && strchr(whitespace, *s))//Bỏ qua các kí tự trắng
     s++;
   
   if (q)
-    *q = s;
+    *q = s; // Lưu vị trí bắt đầu của đối số vào con trỏ q
 
-  ret = *s;
+  ret = *s; 
   switch (*s) {
-    case 0:
+    case 0: // Nếu là ký tự NULL (hết chuỗi)
       break;
       
-    default:
+    default:// Nếu không phải kí tự trắng
       ret = 'a';
 
-      while (s < es && !strchr(whitespace, *s))
-        s++;
+      while (s < es && !strchr(whitespace, *s)) // Đọc đến khi gặp kí tự trắng
+        s++; 
 
-      break;
+      break; // Kết thúc
   }
   if (eq)
-    *eq = s;
+    *eq = s; // Lưu vị trí kết thúc của đối số vào con trỏ eq
 
-  while (s < es && strchr(whitespace, *s))
+  while (s < es && strchr(whitespace, *s)) // Bỏ qua các kí tự trắng
     s++;
 
-  *ps = s;
+  *ps = s; // Cập nhật vị trí của con trỏ ps
   return ret;
 }
 
+//
 int main(int argc, char* argv[]) {
-  char* xargs[MAXARG];
+  char* xargs[MAXARG]; // Mảng chứa các đối số
   int n=0;
   int flag = 0;
   int argstart = 0;
@@ -80,6 +81,8 @@ int main(int argc, char* argv[]) {
   // Đọc input từ stdin
   while (getcmd(buf[i], sizeof(buf[i])) >= 0) {
     char* s = buf[i];
+    //print buf[i]
+
     char* es = s + strlen(s);
     while (gettoken(&s, es, &q, &eq) != 0) {
       *eq = 0;  // Kết thúc chuỗi
@@ -98,11 +101,7 @@ int main(int argc, char* argv[]) {
           exec(xargs[0], xargs);  // Thực thi lệnh với các đối số
           exit(0);  // Thoát khi kết thúc
         } 
-        else 
-        {
-          wait(0);  // Chờ tiến trình con
-        }
-
+        wait(0);  // Chờ tiến trình con
         // Đặt lại chỉ số `j` và đếm lại số đối số
         j = argstart;
         count = 0;

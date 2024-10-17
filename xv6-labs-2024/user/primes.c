@@ -12,7 +12,7 @@ void primes(int cur_pipe) {
     }
 
     // Print the prime number
-    printf("prime: %d\n", prime);
+    printf("prime %d\n", prime);
 
     int fd[2];
     if (pipe(fd) < 0) {

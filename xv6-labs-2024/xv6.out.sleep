@@ -8,4 +8,8 @@ $ sleep 10
 exec sleep failed
 $ echo FAIL
 FAIL
+<<<<<<< HEAD
 $ qemu-system-riscv64: terminating on signal 15 from pid 17998 (make)
+=======
+$ qemu-system-riscv64: terminating on signal 15 from pid 7401 (make)
+>>>>>>> d8ef786cf7adf02927e1f8892492bb9a315e3fc3

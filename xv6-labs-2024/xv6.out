@@ -1,6 +1,7 @@
 
 xv6 kernel is booting
 
+<<<<<<< HEAD
 hart 2 starting
 hart 1 starting
 init: starting sh
@@ -8,3 +9,11 @@ $ (echo 1 ; echo 2) | xargs echo
 1
 2
 $ qemu-system-riscv64: terminating on signal 15 from pid 577 (make)
+=======
+hart 1 starting
+hart 2 starting
+init: starting sh
+$ (echo 1 ; echo 2) | xargs echo
+1 2
+$ qemu-system-riscv64: terminating on signal 15 from pid 7734 (make)
+>>>>>>> d8ef786cf7adf02927e1f8892492bb9a315e3fc3

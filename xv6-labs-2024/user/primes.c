@@ -12,7 +12,7 @@ void primes(int cur_pipe) {
     }
 
     // Print the prime number
-    printf("prime: %d\n", prime);
+    printf("prime %d\n", prime);
 
     int fd[2];
     if (pipe(fd) < 0) {
@@ -26,7 +26,7 @@ void primes(int cur_pipe) {
     if (pid == 0) {
         // Child process to handle next prime filtering
         close(fd[1]);  // Close write end in child
-        close(cur_pipe);  // Close current pipe in child
+        close(cur_pipe);  // Close current pipe in child, You got a buffer overflow if you not close this pip
         primes(fd[0]); // Recursive call
     } else {
         // Parent process filters numbers

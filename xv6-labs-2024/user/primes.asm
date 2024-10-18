@@ -32,7 +32,7 @@ void primes(int cur_pipe) {
     }
 
     // Print the prime number
-    printf("prime: %d\n", prime);
+    printf("prime %d\n", prime);
   24:	fdc42583          	lw	a1,-36(s0)
   28:	00001517          	auipc	a0,0x1
   2c:	97850513          	addi	a0,a0,-1672 # 9a0 <malloc+0x102>
@@ -56,7 +56,7 @@ void primes(int cur_pipe) {
         close(fd[1]);  // Close write end in child
   46:	fd442503          	lw	a0,-44(s0)
   4a:	3b0000ef          	jal	3fa <close>
-        close(cur_pipe);  // Close current pipe in child
+        close(cur_pipe);  // Close current pipe in child, You got a buffer overflow if you not close this pip
   4e:	8526                	mv	a0,s1
   50:	3aa000ef          	jal	3fa <close>
         primes(fd[0]); // Recursive call

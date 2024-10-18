@@ -1,11 +1,20 @@
 
 xv6 kernel is booting
 
+<<<<<<< HEAD
 hart 1 starting
 hart 2 starting
+=======
+hart 2 starting
+hart 1 starting
+>>>>>>> d8ef786cf7adf02927e1f8892492bb9a315e3fc3
 init: starting sh
 $ sleep
 exec sleep failed
 $ echo OK
 OK
+<<<<<<< HEAD
 $ qemu-system-riscv64: terminating on signal 15 from pid 17966 (make)
+=======
+$ qemu-system-riscv64: terminating on signal 15 from pid 7088 (make)
+>>>>>>> d8ef786cf7adf02927e1f8892492bb9a315e3fc3
